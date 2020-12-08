@@ -75,7 +75,9 @@ class IsingHamiltonian:
 
         Hlist = self._gen_hamil_list(sched_prob, sched_driver)
 
-        result = sesolve(Hlist, psi0, tlist, e_ops=e_ops, args={'annealing_time': annealing_time})
+        result = sesolve(Hlist, psi0, tlist, e_ops=e_ops,
+                         args={'annealing_time': annealing_time})
         expects = np.transpose(result.expect)
-        arr = np.array(list(zip(tlist, expects)), dtype=[('time', float), ('expect', (float, 2**self.num_spins))])
+
+        arr = np.array(list(zip(tlist, expects)), dtype=[('time', float), ('expect', (float, len(expects[0])))])
         return arr.view(np.recarray)
