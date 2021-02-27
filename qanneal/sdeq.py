@@ -65,7 +65,7 @@ class IsingHamiltonian:
         arr = np.array(Elists, dtype=[('time', float), ('energy', (float, 2**self.num_spins))])
         return arr.view(np.recarray)
 
-    def solve_sdeq(self, tlist, e_ops=None, sched_prob=None, sched_driver=None):
+    def solve_sdeq(self, tlist, e_ops=None, sched_prob=None, sched_driver=None, **sched_args):
         annealing_time = tlist[-1]
         evals_driver, ekets_driver = self.H_driver.eigenstates()
         psi0 = ekets_driver[np.argmin(evals_driver)]
@@ -75,8 +75,9 @@ class IsingHamiltonian:
 
         Hlist = self._gen_hamil_list(sched_prob, sched_driver)
 
-        result = sesolve(Hlist, psi0, tlist, e_ops=e_ops,
-                         args={'annealing_time': annealing_time})
+        args = sched_args.copy()
+        args.update(dict(annealing_time=annealing_time))
+        result = sesolve(Hlist, psi0, tlist, e_ops=e_ops, args=args)
         expects = np.transpose(result.expect)
 
         arr = np.array(list(zip(tlist, expects)), dtype=[('time', float), ('expect', (float, len(expects[0])))])
