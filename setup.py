@@ -12,7 +12,7 @@ def read_requirements():
 
 setup(
     name='qanneal',
-    version='0.0.2',
+    version='0.0.3',
     description='Python library for simulation of quantum annealing',
     long_description='README.md',
     author='mullzhang',
