@@ -18,7 +18,6 @@ setup(
     author='mullzhang',
     install_requires=read_requirements(),
     url='https://github.com/mullzhang/qanneal',
-    license=license,
-    packages=find_packages(exclude=('tests', 'docs')),
-    test_suite='tests'
+    license='MIT License',
+    packages=['qanneal'],
 )
